@@ -5,10 +5,10 @@ Chocolatey and WinGet.
 
 ## For users
 
-```powershell
-choco install rl-lang
-winget install rl-lang.rl
-```
+| Target | Status | Install |
+|--------|--------|---------|
+| Chocolatey | feed pending (moderation) | `choco install rl-lang` |
+| WinGet | PR pending (`winget-pkgs`) | `winget install rl-lang.rl` |
 
 Both ship the full binary set:
 `rl`, `rlc`, `rlt`, `rlrepl`, `rlsp`, `rldocs`, `rlm`.
@@ -19,6 +19,7 @@ One command bumps both targets:
 
 ```bash
 ./bump.sh 2.3.0
+./fetch-hashes.sh 2.3.0   # pulls installer digests from the release API
 ./bump.sh --check   # CI runs this
 ```
 

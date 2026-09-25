@@ -14,4 +14,4 @@ jobs:
       - name: XML parses
         run: python3 -c "import xml.dom.minidom; xml.dom.minidom.parse('choco/rl-lang.nuspec')"
       - name: Shell syntax
-        run: bash -n bump.sh
+        run: bash -n bump.sh && bash -n fetch-hashes.sh

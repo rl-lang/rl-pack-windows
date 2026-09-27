@@ -17,11 +17,16 @@ import re, sys
 x64, arm = sys.argv[1].upper(), sys.argv[2].upper()
 p = 'winget/rl-lang.rl.installer.yaml'
 s = open(p).read()
-s = re.sub(r'(- Architecture: x64\n    InstallerUrl: [^\n]*\n    InstallerSha256: )[0-9A-Fa-f]+', r'\g<1>' + x64, s)
-s = re.sub(r'(- Architecture: arm64\n    InstallerUrl: [^\n]*\n    InstallerSha256: )[0-9A-Fa-f]+', r'\g<1>' + arm, s)
+# [0-9A-Za-z_]+ matches both real hashes and the REPLACE_WITH_ACTUAL_SHA256
+# placeholders that bump.sh leaves behind.
+s = re.sub(r'(- Architecture: x64\n    InstallerUrl: [^\n]*\n    InstallerSha256: )[0-9A-Za-z_]+', r'\g<1>' + x64, s)
+s = re.sub(r'(- Architecture: arm64\n    InstallerUrl: [^\n]*\n    InstallerSha256: )[0-9A-Za-z_]+', r'\g<1>' + arm, s)
 open(p, 'w').write(s)
 EOF
-sed -i "s|checksum\(64\)\?       = \".*\"|checksum\1       = \"$x64\"|" choco/tools/chocolateyinstall.ps1
+# Both url and url64bit point at the x64 zip, so both checksums are the x64
+# hash. (checksum64 has different alignment than checksum: match each line.)
+sed -i -E "s|checksum64[[:space:]]*=[[:space:]]*\".*\"|checksum64     = \"$x64\"|" choco/tools/chocolateyinstall.ps1
+sed -i -E "s|checksum[[:space:]]*=[[:space:]]*\".*\"|checksum       = \"$x64\"|" choco/tools/chocolateyinstall.ps1
 
 echo "fetch-hashes: x64 $x64"
 echo "fetch-hashes: arm $arm"

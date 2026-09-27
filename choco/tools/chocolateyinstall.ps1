@@ -10,9 +10,9 @@ $packageArgs = @{
   unzipLocation  = $toolsDir
   url            = $url
   url64bit       = $url
-  checksum       = "1b5e68c287648be5709a24a5a6342435fdd4627170e7d56cb923f4997da759ef"
+  checksum       = "e4358a441cbf993a342e3f9236532161a348012101022b960d7a71b5464c9bbf"
   checksumType   = "sha256"
-  checksum64     = "1b5e68c287648be5709a24a5a6342435fdd4627170e7d56cb923f4997da759ef"
+  checksum64     = "e4358a441cbf993a342e3f9236532161a348012101022b960d7a71b5464c9bbf"
   checksumType64 = "sha256"
 }
 
